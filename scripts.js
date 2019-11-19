@@ -1,4 +1,10 @@
 const app = document.getElementById('root');
+const sidebar = document.getElementById('sidebar');
+
+header = document.createElement('h1');
+header.textContent = "Homeless Kiwi";
+header.style.margin = "1em";
+sidebar.appendChild(header);
 
 const container = document.createElement('div');
 container.setAttribute('class', 'container');
@@ -22,8 +28,14 @@ request.onload = function() {
             const card = document.createElement('div');
             card.setAttribute('class', 'card');
 
+            const img = document.createElement('img');
+            img.setAttribute('src', 'https://via.placeholder.com/150x150/');
+            img.style.cssFloat = "left";
+            img.style.marginRight = "1em";
+
             const h1 = document.createElement('h1');
             h1.textContent = listing.address;
+            h1.style.display = "inline-block";
 
             const h2 = document.createElement('h2');
             h2.textContent = `$${listing.price} / Week`;
@@ -31,19 +43,16 @@ request.onload = function() {
             const p = document.createElement('p');
             p.textContent = `${listing.heroText}`;
 
-            const beds = document.createElement('p');
-            beds.textContent = `${listing.bedrooms} Bedrooms`;
-
-            const bathrooms = document.createElement('p');
-            bathrooms.textContent = `${listing.bathrooms} Bathrooms`;
+            const bedbath = document.createElement('p');
+            bedbath.style.fontWeight = "bold";
+            bedbath.textContent = `${listing.bedrooms} Bedrooms \t ${listing.bathrooms} Bathrooms`;
 
             container.appendChild(card);
-
+            card.appendChild(img);
             card.appendChild(h1);
             card.appendChild(h2);
             card.appendChild(p);
-            card.appendChild(beds);
-            card.appendChild(bathrooms);
+            card.appendChild(bedbath);
         });
     } else {
         const errorMessage = document.createElement('marquee');

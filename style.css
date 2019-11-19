@@ -42,8 +42,6 @@ main {
 
 h1 {
       font-size: 2em;
-        margin: 0.67em 0;
-        
 }
 
 /* Grouping content
@@ -384,20 +382,21 @@ body {
     margin: 0;
     display: flex;
     font-family: 'Raleway', sans-serif;
+    background: #f2f2f2;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Lato', sans-serif;
+    margin: 0;
+    margin-bottom: 0.67rem;
 }
 
 #sidebar {
 
 	display: block;
 	width: 18em;
-	background: #FBFBFB;
-	border-right: 1px solid #EEE;
-	padding: 26px;
-	max-height: calc(100vh - 2em);
+	background: white;
+	border-right: 1px solid #CECECE;
 	height: 100vh;
 }
 
@@ -415,19 +414,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card {
-	border: 1px solid #F0F0F0;
+	border: 1px solid #CECECE;
 	margin-bottom: 1em;
 	padding: 1em;
-	background: #FBFBFB;
+    background: white;
+    box-shadow: 2px 2px 2px #e1e1e1;
+    border-radius: 5px;
+    margin-top: 0.5em;
 }
 
 h1 {
     font-size: 26px;
     font-weight: normal;
-    width: 100%;
 }
 h2 {
     font-size: 18px;
     font-weight: normal;
-    width: 100%;
 }
