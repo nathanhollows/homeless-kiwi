@@ -29,7 +29,7 @@ request.onload = function() {
             card.setAttribute('class', 'card');
 
             const img = document.createElement('img');
-            img.setAttribute('src', 'https://via.placeholder.com/150x150/');
+            img.setAttribute('src', `${listing.image}`);
             img.style.cssFloat = "left";
             img.style.marginRight = "1em";
 
