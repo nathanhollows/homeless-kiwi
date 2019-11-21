@@ -392,8 +392,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #sidebar {
-
 	display: block;
+    position: sticky;
+    top: 0;
 	width: 18em;
 	background: white;
 	border-right: 1px solid #CECECE;
@@ -414,6 +415,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card {
+    display: flex;
 	border: 1px solid #CECECE;
 	margin-bottom: 1em;
 	padding: 1em;

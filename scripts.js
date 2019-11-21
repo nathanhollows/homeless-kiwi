@@ -8,8 +8,11 @@ sidebar.appendChild(header);
 
 const container = document.createElement('div');
 container.setAttribute('class', 'container');
-
 app.appendChild(container);
+
+const loader = document.createElement('h1');
+loader.textContent = "Finding Flats...";
+container.appendChild(loader);
 
 var request = new XMLHttpRequest();
 var data;
@@ -20,6 +23,7 @@ request.onload = function() {
     data = JSON.parse(this.response);
 
     if (request.status >= 200 && request.status < 400) {
+        container.removeChild(loader);
         const header = document.createElement('h1');
         header.textContent = `${data["data"].length} results found`;
         container.appendChild(header);
@@ -28,9 +32,12 @@ request.onload = function() {
             const card = document.createElement('div');
             card.setAttribute('class', 'card');
 
+            const cardText = document.createElement('div');
+            const cardImg = document.createElement('div');
+
             const img = document.createElement('img');
             img.setAttribute('src', `${listing.image}`);
-            img.style.cssFloat = "left";
+            img.style.width = "200px";
             img.style.marginRight = "1em";
 
             const h1 = document.createElement('h1');
@@ -48,11 +55,15 @@ request.onload = function() {
             bedbath.textContent = `${listing.bedrooms} Bedrooms \t ${listing.bathrooms} Bathrooms`;
 
             container.appendChild(card);
-            card.appendChild(img);
-            card.appendChild(h1);
-            card.appendChild(h2);
-            card.appendChild(p);
-            card.appendChild(bedbath);
+
+            card.appendChild(cardImg);
+            cardImg.appendChild(img);
+
+            card.appendChild(cardText);
+            cardText.appendChild(h1);
+            cardText.appendChild(h2);
+            cardText.appendChild(p);
+            cardText.appendChild(bedbath);
         });
     } else {
         const errorMessage = document.createElement('marquee');
