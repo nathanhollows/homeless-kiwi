@@ -1,18 +1,15 @@
 const app = document.getElementById('root');
 const sidebar = document.getElementById('sidebar');
 
-header = document.createElement('h1');
-header.textContent = "Homeless Kiwi";
-header.style.margin = "1em";
-sidebar.appendChild(header);
+createSidebar();
 
 const container = document.createElement('div');
 container.setAttribute('class', 'container');
 app.appendChild(container);
 
-const loader = document.createElement('h1');
-loader.textContent = "Finding Flats...";
-container.appendChild(loader);
+const containerHeader = document.createElement('h1');
+containerHeader.textContent = "Finding Flats...";
+container.appendChild(containerHeader);
 
 var request = new XMLHttpRequest();
 var data;
@@ -23,10 +20,7 @@ request.onload = function() {
     data = JSON.parse(this.response);
 
     if (request.status >= 200 && request.status < 400) {
-        container.removeChild(loader);
-        const header = document.createElement('h1');
-        header.textContent = `${data["data"].length} results found`;
-        container.appendChild(header);
+        containerHeader.textContent = `${data["data"].length} results found`;
 
         data["data"].forEach(listing => {
             const card = document.createElement('div');
@@ -34,6 +28,7 @@ request.onload = function() {
 
             const cardText = document.createElement('div');
             const cardImg = document.createElement('div');
+            cardText.style.width = "100%";
 
             const img = document.createElement('img');
             img.setAttribute('src', `${listing.image}`);
@@ -64,6 +59,24 @@ request.onload = function() {
             cardText.appendChild(h2);
             cardText.appendChild(p);
             cardText.appendChild(bedbath);
+
+            if (listing.url != null) {
+                const button = document.createElement('a');
+                button.href = listing.url;
+                switch (String(listing.agent)) {
+                    case "hooker":
+                        button.textContent = "LJ Hooker";
+                    case "mana":
+                        button.textContent = "Mana Property";
+                    case "darling":
+                        button.textContent = "Darling Realty";
+                    default:
+                        button.textContent = "Website";
+                }
+                button.setAttribute('class', 'button pull-right');
+                bedbath.appendChild(button);
+            }
+
         });
     } else {
         const errorMessage = document.createElement('marquee');
@@ -73,3 +86,63 @@ request.onload = function() {
 }
 
 request.send();
+
+function createSidebar() {
+    // Title
+    title = document.createElement('h1');
+    title.textContent = "Homeless Kiwi";
+    title.style.marginTop = "0.4em";
+    sidebar.appendChild(title);
+
+    // Search
+    searchLabel = document.createElement('label');
+    searchLabel.textContent = 'Search'
+    searchLabel.setAttribute('for', 'searchInput');
+    searchLabel.style.fontWeight = 'bold';
+
+    searchInput = document.createElement('input');
+    searchInput.id = 'searchInput';
+    searchInput.setAttribute('placeholder', 'Search...');
+    searchInput.type = 'text';
+
+    sidebar.appendChild(searchLabel);
+    sidebar.appendChild(searchInput);
+
+    // Price
+    priceLabel = document.createElement('label');
+    priceLabel.textContent = 'Price'
+    priceLabel.setAttribute('for', 'priceFrom');
+    priceLabel.style.fontWeight = 'bold';
+
+    priceFrom = document.createElement('input');
+    priceFrom.id = 'priceFrom';
+    priceFrom.setAttribute('placeholder', 'From');
+    priceFrom.type = 'text';
+
+    priceTo = document.createElement('input');
+    priceTo.id = 'priceTo';
+    priceTo.setAttribute('placeholder', 'To');
+    priceTo.type = 'text';
+    sidebar.appendChild(priceLabel);
+    sidebar.appendChild(priceFrom);
+    sidebar.appendChild(priceTo);
+
+    // Bedrooms
+    bedroomsLabel = document.createElement('label');
+    bedroomsLabel.textContent = 'Bedrooms'
+    bedroomsLabel.setAttribute('for', 'bedroomsFrom');
+    bedroomsLabel.style.fontWeight = 'bold';
+
+    bedroomsFrom = document.createElement('input');
+    bedroomsFrom.id = 'bedroomsFrom';
+    bedroomsFrom.setAttribute('placeholder', 'From');
+    bedroomsFrom.type = 'text';
+
+    bedroomsTo = document.createElement('input');
+    bedroomsTo.id = 'bedroomsTo';
+    bedroomsTo.setAttribute('placeholder', 'To');
+    bedroomsTo.type = 'text';
+    sidebar.appendChild(bedroomsLabel);
+    sidebar.appendChild(bedroomsFrom);
+    sidebar.appendChild(bedroomsTo);
+}

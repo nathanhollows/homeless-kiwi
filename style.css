@@ -385,24 +385,58 @@ body {
     background: #f2f2f2;
 }
 
+/* Typography */
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Lato', sans-serif;
     margin: 0;
     margin-bottom: 0.67rem;
 }
 
-#sidebar {
-	display: block;
-    position: sticky;
-    top: 0;
-	width: 18em;
-	background: white;
-	border-right: 1px solid #CECECE;
-	height: 100vh;
+h1 {
+    font-size: 26px;
+    font-weight: normal;
+}
+h2 {
+    font-size: 18px;
+    font-weight: normal;
 }
 
+.button {
+    background-color:
+    #124559;
+    padding: 0.5em;
+    border-radius: 3px;
+    color:
+    white;
+    text-decoration: none;
+    font-weight: normal;
+    text-transform: capitalize;
+    margin-top: -0.5em;
+}
+
+/* Sidebar */
+
+#sidebar {
+    display: block;
+    position: sticky;
+    top: 0;
+    width: 18em;
+    background: white;
+    border-right: 1px solid #CECECE;
+    height: 100vh;
+    padding: 1em;
+    transition: margin 0.6s ease;
+}
+
+.s-hide {
+    margin-left: -20em;
+}
+
+/* Content */
+
 #root {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     width: 100%;
 }
@@ -416,20 +450,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .card {
     display: flex;
-	border: 1px solid #CECECE;
-	margin-bottom: 1em;
-	padding: 1em;
+    border: 1px solid #CECECE;
+    margin-bottom: 1em;
+    padding: 1em;
     background: white;
     box-shadow: 2px 2px 2px #e1e1e1;
     border-radius: 5px;
     margin-top: 0.5em;
 }
 
-h1 {
-    font-size: 26px;
-    font-weight: normal;
-}
-h2 {
-    font-size: 18px;
-    font-weight: normal;
+/* Utilities */
+
+.pull-right {
+    float: right;
 }
