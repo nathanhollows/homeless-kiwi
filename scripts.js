@@ -1,7 +1,6 @@
 const app = document.getElementById('root');
 const sidebar = document.getElementById('sidebar');
 const api = 'https://nathanhollows.com/flats/api/flats/?';
-var filter = false;
 
 createSidebar();
 
@@ -27,8 +26,9 @@ function createSidebar() {
     sidebar.appendChild(title);
 
     hamburger = document.createElement('a');
+    hamburger.id = "ham";
     hamburger.textContent = "☰";
-    hamburger.style.float = "right";
+    hamburger.addEventListener("click", toggleSidebar);
     title.appendChild(hamburger);
 
     // Search
@@ -192,4 +192,8 @@ function queryAPI() {
     }
 
     request.send();
+}
+
+function toggleSidebar() {
+    sidebar.classList.toggle("s-hide");
 }

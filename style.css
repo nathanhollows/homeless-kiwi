@@ -426,13 +426,25 @@ h2 {
     border-right: 1px solid #CECECE;
     height: 100vh;
     padding: 1em;
-    transition: margin 0.6s ease;
+    transition: all 0.6s ease;
+    box-sizing: border-box;
 }
 
 .s-hide {
-    margin-left: -20em;
+    margin-left: -18em;
 }
 
+#ham {
+    transition: all 0.5s ease-in-out;
+    position: relative;
+    float: right;
+    right: 0;
+    cursor: pointer;
+}
+
+.s-hide #ham {
+    right: -2.5em;
+}
 /* Content */
 
 #root {
@@ -496,5 +508,21 @@ img {
     }
     img {
         width: 100%;
+    }
+    #sidebar {
+        position: fixed;
+        right: 0em;
+        box-shadow: 0 0 3em black;
+    }
+    #sidebar.s-hide {
+        right: -18em;
+        box-shadow: none;
+    }
+    #ham {
+        float: left;
+        left: 0;
+    }
+    .s-hide #ham {
+        left: -2.5em;
     }
 }
