@@ -464,3 +464,37 @@ h2 {
 .pull-right {
     float: right;
 }
+
+label {
+    width: 100%;
+    display: block;
+    margin: 0.8em 0 0.4em 0;
+}
+
+input {
+    box-sizing: border-box;
+    background: white;
+    border: 1px solid #cecece;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 5%;
+    width: 100%;
+}
+input ~ input {
+    width: 48%;
+}
+input + input {
+    margin-left: 4%;
+}
+img {
+    width: 200px;
+}
+
+@media only screen and (max-width: 840px) {
+    .card {
+        flex-direction: column;
+    }
+    img {
+        width: 100%;
+    }
+}

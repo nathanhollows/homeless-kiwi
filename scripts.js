@@ -1,6 +1,6 @@
 const app = document.getElementById('root');
 const sidebar = document.getElementById('sidebar');
-const api = 'https://nathanhollows.com/flats/api/flats/';
+const api = 'https://nathanhollows.com/flats/api/flats/?';
 var filter = false;
 
 createSidebar();
@@ -26,6 +26,11 @@ function createSidebar() {
     title.style.marginTop = "0.4em";
     sidebar.appendChild(title);
 
+    hamburger = document.createElement('a');
+    hamburger.textContent = "☰";
+    hamburger.style.float = "right";
+    title.appendChild(hamburger);
+
     // Search
     searchLabel = document.createElement('label');
     searchLabel.textContent = 'Search'
@@ -37,19 +42,14 @@ function createSidebar() {
     searchInput.setAttribute('placeholder', 'Search...');
     searchInput.type = 'text';
 
-    searchInput.addEventListener('input', function(evt) {
-        if (searchInput.value != "") {
-            filter  = true;
-            queryAPI();
-        }
-    })
+    searchInput.addEventListener('input', queryAPI);
 
     sidebar.appendChild(searchLabel);
     sidebar.appendChild(searchInput);
 
     // Price
     priceLabel = document.createElement('label');
-    priceLabel.textContent = 'Price'
+    priceLabel.textContent = 'Price Per Week';
     priceLabel.setAttribute('for', 'priceFrom');
     priceLabel.style.fontWeight = 'bold';
 
@@ -57,11 +57,13 @@ function createSidebar() {
     priceFrom.id = 'priceFrom';
     priceFrom.setAttribute('placeholder', 'From');
     priceFrom.type = 'text';
+    priceFrom.addEventListener('input', queryAPI);
 
     priceTo = document.createElement('input');
     priceTo.id = 'priceTo';
     priceTo.setAttribute('placeholder', 'To');
     priceTo.type = 'text';
+    priceTo.addEventListener('input', queryAPI);
     sidebar.appendChild(priceLabel);
     sidebar.appendChild(priceFrom);
     sidebar.appendChild(priceTo);
@@ -76,18 +78,37 @@ function createSidebar() {
     bedroomsFrom.id = 'bedroomsFrom';
     bedroomsFrom.setAttribute('placeholder', 'From');
     bedroomsFrom.type = 'text';
+    bedroomsFrom.addEventListener('input', queryAPI);
 
     bedroomsTo = document.createElement('input');
     bedroomsTo.id = 'bedroomsTo';
     bedroomsTo.setAttribute('placeholder', 'To');
     bedroomsTo.type = 'text';
+    bedroomsTo.addEventListener('input', queryAPI);
     sidebar.appendChild(bedroomsLabel);
     sidebar.appendChild(bedroomsFrom);
     sidebar.appendChild(bedroomsTo);
 }
 
 function queryAPI() {
-    let search = '?search=' + searchInput.value;
+    var params = {
+        search: searchInput.value,
+        priceLow: priceFrom.value,
+        priceHigh: priceTo.value,
+        bedroomsLow: bedroomsFrom.value,
+        bedroomsHigh: bedroomsTo.value
+    };
+    var esc = encodeURIComponent;
+    var query = Object.keys(params)
+        .filter(function(k) {
+            if (params[k] != "") {
+                return esc(k) + '=' + esc(params[k]);
+            }
+            return;
+        })
+        .map(k => esc(k) + '=' + esc(params[k]))
+        .join('&');
+    console.log(query);
 
     containerHeader.textContent = "Finding Flats...";
     while (container.childNodes.length > 1) {
@@ -95,7 +116,7 @@ function queryAPI() {
     }
 
     request.abort();
-    request.open('GET', api + search, true);
+    request.open('GET', api + query, true);
 
 
     request.onload = function() {
@@ -114,7 +135,6 @@ function queryAPI() {
 
                 const img = document.createElement('img');
                 img.setAttribute('src', `${listing.image}`);
-                img.style.width = "200px";
                 img.style.marginRight = "1em";
 
                 const h1 = document.createElement('h1');
@@ -122,14 +142,18 @@ function queryAPI() {
                 h1.style.display = "inline-block";
 
                 const h2 = document.createElement('h2');
-                h2.textContent = `$${listing.price} / Week`;
+                if (listing.price != 0) {
+                    h2.textContent = `$${listing.price} / Week`;
+                } else {
+                    h2.textContent = 'No price given';
+                }
 
                 const p = document.createElement('p');
                 p.textContent = `${listing.heroText}`;
 
                 const bedbath = document.createElement('p');
                 bedbath.style.fontWeight = "bold";
-                bedbath.textContent = `${listing.bedrooms} Bedrooms \t ${listing.bathrooms} Bathrooms`;
+                bedbath.textContent = `${listing.bedrooms} Bedrooms  ${listing.bathrooms} Bathrooms`;
 
                 container.appendChild(card);
 
